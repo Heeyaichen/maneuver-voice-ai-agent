@@ -140,12 +140,18 @@ class FounderAssistant(Agent):
         success = lead_storage.update_field(field, value)
         
         if success:
-            # TODO: Forward to frontend via RPC for visual update (bonus feature)
-            # await context.room.local_participant.perform_rpc(
-            #     destination_identity="frontend",
-            #     method="updateLeadField",
-            #     payload=json.dumps({"field": field, "value": value})
-            # )
+            # Forward to frontend via RPC for visual update
+            try:
+                participants = [p for p in context.room.remote_participants.values()]
+                if participants:
+                    await participants[0].perform_rpc(
+                        method="updateLeadField",
+                        payload=json.dumps({"field": field, "value": value})
+                    )
+                    logger.info(f"RPC sent: updateLeadField - {field}")
+            except Exception as e:
+                logger.warning(f"Failed to send RPC: {e}")
+
             return f"Captured: {field}"
         else:
             return "Failed to capture information"
@@ -199,13 +205,18 @@ class FounderAssistant(Agent):
         logger.info(f"Lead data saved to: {filepath}")
         logger.info(f"Summary:\n{summary}")
         
-        # TODO: Forward to frontend via RPC to show summary view (bonus feature)
-        # await context.room.local_participant.perform_rpc(
-        #     destination_identity="frontend",
-        #     method="showDiscoverySummary",
-        #     payload=json.dumps(lead_storage.get_lead_data())
-        # )
-        
+        # Forward to frontend via RPC to show summary view
+        try:
+            participants = [p for p in context.room.remote_participants.values()]
+            if participants:
+                await participants[0].perform_rpc(
+                    method="showDiscoverySummary",
+                    payload=json.dumps(lead_storage.get_lead_data())
+                )
+                logger.info("RPC sent: showDiscoverySummary")
+        except Exception as e:
+            logger.warning(f"Failed to send RPC: {e}")        
+
         return f"Discovery complete. Information saved. Summary: {summary}"
     
     @function_tool
@@ -219,13 +230,18 @@ class FounderAssistant(Agent):
         """
         logger.info("Triggering services slide visual")
         
-        # TODO: Forward to frontend via RPC (bonus feature)
-        # await context.room.local_participant.perform_rpc(
-        #     destination_identity="frontend",
-        #     method="showServicesSlide",
-        #     payload=json.dumps({})
-        # )
-        
+        # Forward to frontend via RPC
+        try:
+            participants = [p for p in context.room.remote_participants.values()]
+            if participants:
+                await participants[0].perform_rpc(
+                    method="showServicesSlide",
+                    payload=json.dumps({})
+                )
+                logger.info("RPC sent: showServicesSlide")
+        except Exception as e:
+            logger.warning(f"Failed to send RPC: {e}")
+
         return "Services slide triggered"
     
     @function_tool
@@ -262,12 +278,17 @@ class FounderAssistant(Agent):
         """
         logger.info("Triggering process diagram visual")
         
-        # TODO: Forward to frontend via RPC (bonus feature)
-        # await context.room.local_participant.perform_rpc(
-        #     destination_identity="frontend",
-        #     method="showProcessDiagram",
-        #     payload=json.dumps({})
-        # )
+          # Forward to frontend via RPC
+        try:
+            participants = [p for p in context.room.remote_participants.values()]
+            if participants:
+                await participants[0].perform_rpc(
+                    method="showProcessDiagram",
+                    payload=json.dumps({})
+                )
+                logger.info("RPC sent: showProcessDiagram")
+        except Exception as e:
+            logger.warning(f"Failed to send RPC: {e}")
         
         return "Process diagram triggered"
 
