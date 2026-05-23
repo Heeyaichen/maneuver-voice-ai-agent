@@ -91,9 +91,17 @@ class FounderAssistant(Agent):
                 - Sound natural and conversational.
                 
                 # When to End Discovery
-                
-                When you've gathered the core information (name, company, problem, business metrics, timeline, budget) and they seem ready to move forward or want next steps, use the end_discovery tool. This will save their information and show them a summary.
-                
+
+                Use the end_discovery tool when ANY of these happen:
+                - They explicitly ask "what are the next steps?" or "how do we move forward?"
+                - They say they want to schedule a follow-up or meeting
+                - They say "this sounds good" or "let's do this" or "I'm interested"
+                - They ask you to summarize what you discussed
+                - You've gathered all core info (name, company, problem, metrics, timeline, budget) and the conversation feels complete
+                - They're wrapping up with phrases like "okay great" or "sounds good" or "talk soon"
+
+                When you call end_discovery, say something like: "Perfect! Let me quickly summarize what we covered today..." and then the tool will save everything and show them the summary.
+
                 # Visual Layer (Bonus)
                 
                 When appropriate, you can trigger visual elements:
@@ -292,7 +300,7 @@ async def maneuver_founder_agent(ctx: JobContext):
         # Text-to-speech
         tts=inference.TTS(
             model="cartesia/sonic-3", 
-            voice="9626c31c-bec5-4cca-baa8-f8ba9e84c8bc"  # Professional male voice
+            voice="a167e0f3-df7e-4d52-a9c3-f949145efdab"  # Professional male voice
         ),
         # Turn detection
         turn_detection=MultilingualModel(),
