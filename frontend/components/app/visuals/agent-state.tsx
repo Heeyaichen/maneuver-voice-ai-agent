@@ -1,11 +1,11 @@
 'use client';
 
-import { useAgentState } from '@livekit/components-react';
+import { useVoiceAssistant } from '@livekit/components-react';
 import { motion } from 'motion/react';
 import { Microphone, Brain, SpeakerHigh } from '@phosphor-icons/react';
 
 export function AgentState() {
-  const agentState = useAgentState();
+  const { state } = useVoiceAssistant();
 
   const stateConfig = {
     listening: {
@@ -25,7 +25,7 @@ export function AgentState() {
     },
   };
 
-  const config = stateConfig[agentState as keyof typeof stateConfig];
+  const config = stateConfig[state as keyof typeof stateConfig];
   if (!config) return null;
 
   const Icon = config.icon;
