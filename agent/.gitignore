@@ -1,0 +1,64 @@
+.env
+.env.*
+!.env.example
+.DS_Store
+__pycache__
+.idea
+KMS
+.venv
+.vscode
+*.egg-info
+.pytest_cache
+.ruff_cache
+
+# Claude Code
+.claude/settings.local.json
+.claude/worktrees/
+
+# OpenAI Codex
+.codex/config.local.toml
+
+# Gemini CLI
+.gemini/history/
+.gemini/tmp/
+.gemini/google_accounts.json
+.gemini/installation_id
+.gemini/oauth_creds.json
+
+# Cursor
+.cursor/chat/
+.cursor/rules/*.local.mdc
+
+# GitHub CLI
+.github/personal-instructions.md
+
+venv/
+node_modules/
+.env
+__pycache__/
+*.pyc
+dist/
+build/
+leads.json
+**/.env.local
+**/.env
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/*.egg-info/
+**/.pytest_cache/
+**/uv.lock
+
+
+# Node
+**/node_modules/
+**/.next/
+**/out/
+**/pnpm-lock.yaml
+
+# OS
+.DS_Store
+
+# Downloaded models
+**/.livekit/
