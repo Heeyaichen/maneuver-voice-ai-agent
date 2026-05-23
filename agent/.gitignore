@@ -61,4 +61,4 @@ leads.json
 .DS_Store
 
 # Downloaded models
-**/.livekit/
+**/.livekit/leads/*.json
