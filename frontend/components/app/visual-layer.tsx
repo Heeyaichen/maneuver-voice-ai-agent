@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useLocalParticipant } from '@livekit/components-react';
-import { ServicesSlide } from './visuals/services-slide';
-import { ProcessDiagram } from './visuals/process-diagram';
-import { LeadPanel } from './visuals/lead-panel';
-import { DiscoverySummary } from './visuals/discovery-summary';
 import { AgentState } from './visuals/agent-state';
+import { DiscoverySummary } from './visuals/discovery-summary';
+import { LeadPanel } from './visuals/lead-panel';
+import { ProcessDiagram } from './visuals/process-diagram';
+import { ServicesSlide } from './visuals/services-slide';
 
 type VisualMode = 'idle' | 'services' | 'process' | 'summary';
 
@@ -38,60 +38,48 @@ export function VisualLayer() {
     if (!localParticipant) return;
 
     // Register RPC method handlers
-    localParticipant.registerRpcMethod(
-      'updateLeadField',
-      async (data: string) => {
-        try {
-          const { field, value } = JSON.parse(data);
-          console.log('[RPC] updateLeadField:', field, value);
-          
-          // Optimistic rendering - update immediately
-          setLeadData((prev) => ({
-            ...prev,
-            [field]: value,
-          }));
-          
-          return JSON.stringify({ success: true });
-        } catch (error) {
-          console.error('[RPC] updateLeadField error:', error);
-          return JSON.stringify({ success: false, error: String(error) });
-        }
-      }
-    );
+    localParticipant.registerRpcMethod('updateLeadField', async (data) => {
+      try {
+        const { field, value } = JSON.parse(data.payload);
+        console.log('[RPC] updateLeadField:', field, value);
 
-    localParticipant.registerRpcMethod(
-      'showServicesSlide',
-      async () => {
-        console.log('[RPC] showServicesSlide');
-        setVisualMode('services');
+        // Optimistic rendering - update immediately
+        setLeadData((prev) => ({
+          ...prev,
+          [field]: value,
+        }));
+
         return JSON.stringify({ success: true });
+      } catch (error) {
+        console.error('[RPC] updateLeadField error:', error);
+        return JSON.stringify({ success: false, error: String(error) });
       }
-    );
+    });
 
-    localParticipant.registerRpcMethod(
-      'showProcessDiagram',
-      async () => {
-        console.log('[RPC] showProcessDiagram');
-        setVisualMode('process');
+    localParticipant.registerRpcMethod('showServicesSlide', async () => {
+      console.log('[RPC] showServicesSlide');
+      setVisualMode('services');
+      return JSON.stringify({ success: true });
+    });
+
+    localParticipant.registerRpcMethod('showProcessDiagram', async () => {
+      console.log('[RPC] showProcessDiagram');
+      setVisualMode('process');
+      return JSON.stringify({ success: true });
+    });
+
+    localParticipant.registerRpcMethod('showDiscoverySummary', async (data) => {
+      try {
+        const summary = JSON.parse(data.payload);
+        console.log('[RPC] showDiscoverySummary:', summary);
+        setDiscoveryData(summary);
+        setVisualMode('summary');
         return JSON.stringify({ success: true });
+      } catch (error) {
+        console.error('[RPC] showDiscoverySummary error:', error);
+        return JSON.stringify({ success: false, error: String(error) });
       }
-    );
-
-    localParticipant.registerRpcMethod(
-      'showDiscoverySummary',
-      async (data: string) => {
-        try {
-          const summary = JSON.parse(data);
-          console.log('[RPC] showDiscoverySummary:', summary);
-          setDiscoveryData(summary);
-          setVisualMode('summary');
-          return JSON.stringify({ success: true });
-        } catch (error) {
-          console.error('[RPC] showDiscoverySummary error:', error);
-          return JSON.stringify({ success: false, error: String(error) });
-        }
-      }
-    );
+    });
 
     return () => {
       // Cleanup RPC handlers
@@ -116,9 +104,7 @@ export function VisualLayer() {
       <div className="visual-content">
         {visualMode === 'services' && <ServicesSlide />}
         {visualMode === 'process' && <ProcessDiagram />}
-        {visualMode === 'summary' && discoveryData && (
-          <DiscoverySummary data={discoveryData} />
-        )}
+        {visualMode === 'summary' && discoveryData && <DiscoverySummary data={discoveryData} />}
       </div>
     </div>
   );
