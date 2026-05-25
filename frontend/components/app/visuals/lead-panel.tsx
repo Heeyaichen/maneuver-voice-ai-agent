@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 interface LeadPanelProps {
   leadData: { [key: string]: string | null };
@@ -19,7 +19,7 @@ const FIELD_LABELS: { [key: string]: string } = {
 };
 
 export function LeadPanel({ leadData }: LeadPanelProps) {
-  const fields = Object.entries(leadData).filter(([_, value]) => value);
+  const fields = Object.entries(leadData).filter(([, value]) => value);
 
   return (
     <motion.div
@@ -27,9 +27,7 @@ export function LeadPanel({ leadData }: LeadPanelProps) {
       animate={{ opacity: 1, x: 0 }}
       className="lead-panel"
     >
-      <h3 className="text-sm font-semibold mb-3 text-muted-foreground">
-        Discovery Info
-      </h3>
+      <h3 className="text-muted-foreground mb-3 text-sm font-semibold">Discovery Info</h3>
       <div className="space-y-2">
         <AnimatePresence mode="popLayout">
           {fields.map(([field, value]) => (
@@ -40,10 +38,10 @@ export function LeadPanel({ leadData }: LeadPanelProps) {
               transition={{ duration: 0.2 }}
               className="lead-field"
             >
-              <div className="text-xs font-medium text-muted-foreground">
+              <div className="text-muted-foreground text-xs font-medium">
                 {FIELD_LABELS[field] || field}
               </div>
-              <div className="text-sm mt-0.5">{value}</div>
+              <div className="mt-0.5 text-sm">{value}</div>
             </motion.div>
           ))}
         </AnimatePresence>
