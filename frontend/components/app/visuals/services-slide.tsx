@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { Robot, ChartLine, TestTube, CloudArrowUp, Microphone } from '@phosphor-icons/react';
+import { ChartLine, CloudArrowUp, Microphone, Robot, TestTube } from '@phosphor-icons/react';
 
 const SERVICES = [
   {
@@ -39,7 +39,7 @@ export function ServicesSlide() {
       transition={{ duration: 0.3 }}
       className="services-slide"
     >
-      <h2 className="text-2xl font-semibold mb-6">Our Services</h2>
+      <h2 className="mb-6 text-2xl font-semibold">Our Services</h2>
       <div className="services-grid">
         {SERVICES.map((service, index) => {
           const Icon = service.icon;
@@ -51,9 +51,9 @@ export function ServicesSlide() {
               transition={{ delay: index * 0.08, duration: 0.2 }}
               className="service-card"
             >
-              <Icon size={32} weight="duotone" className="mb-3 text-primary" />
-              <h3 className="font-semibold mb-2">{service.title}</h3>
-              <p className="text-sm text-muted-foreground">{service.description}</p>
+              <Icon size={32} weight="duotone" className="text-primary mb-3" />
+              <h3 className="mb-2 font-semibold">{service.title}</h3>
+              <p className="text-muted-foreground text-sm">{service.description}</p>
             </motion.div>
           );
         })}
