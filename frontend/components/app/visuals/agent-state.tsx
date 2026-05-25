@@ -1,8 +1,8 @@
 'use client';
 
-import { useVoiceAssistant } from '@livekit/components-react';
 import { motion } from 'motion/react';
-import { Microphone, Brain, SpeakerHigh } from '@phosphor-icons/react';
+import { useVoiceAssistant } from '@livekit/components-react';
+import { Brain, Microphone, SpeakerHigh } from '@phosphor-icons/react';
 
 export function AgentState() {
   const { state } = useVoiceAssistant();
