@@ -12,21 +12,27 @@ const PROCESS_STEPS = [
   },
   {
     number: 2,
-    title: 'Technical Audit',
+    title: 'Design',
     duration: '1 week',
-    description: 'Review current systems, data, and readiness',
+    description: 'Architect the right AI solution for your business',
   },
   {
     number: 3,
-    title: 'Implementation',
+    title: 'Build',
     duration: '2-4 weeks',
-    description: 'Build and deploy AI solution',
+    description: 'Develop and integrate your custom AI system',
   },
   {
     number: 4,
-    title: 'Handoff',
+    title: 'Deploy',
+    duration: '1 week',
+    description: 'Launch into production with full testing',
+  },
+  {
+    number: 5,
+    title: 'Optimize',
     duration: 'Ongoing',
-    description: 'Your team owns it, we support as needed',
+    description: 'Continuously improve based on real metrics',
   },
 ];
 
@@ -38,7 +44,7 @@ export function ProcessDiagram() {
       transition={{ duration: 0.3 }}
       className="process-diagram"
     >
-      <h2 className="text-2xl font-semibold mb-6">Our Process</h2>
+      <h2 className="mb-6 text-2xl font-semibold">Our Process</h2>
       <div className="process-steps">
         {PROCESS_STEPS.map((step, index) => (
           <div key={step.number} className="flex items-center">
@@ -51,8 +57,8 @@ export function ProcessDiagram() {
               <div className="step-number">{step.number}</div>
               <div className="step-content">
                 <h3 className="font-semibold">{step.title}</h3>
-                <div className="text-xs text-muted-foreground mb-1">{step.duration}</div>
-                <p className="text-sm text-muted-foreground">{step.description}</p>
+                <div className="text-muted-foreground mb-1 text-xs">{step.duration}</div>
+                <p className="text-muted-foreground text-sm">{step.description}</p>
               </div>
             </motion.div>
             {index < PROCESS_STEPS.length - 1 && (
