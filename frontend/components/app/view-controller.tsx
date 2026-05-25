@@ -75,7 +75,7 @@ export function ViewController({ appConfig }: ViewControllerProps) {
           />
         )}
       </AnimatePresence>
-      
+
       {/* Visual Layer - Only show when connected */}
       {isConnected && <VisualLayer />}
     </>
